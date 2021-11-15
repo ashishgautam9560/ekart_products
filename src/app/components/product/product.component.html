@@ -1,0 +1,56 @@
+<div class="form-group row"></div>
+
+<div class="form-group row" style="margin-right: 40px;">
+    
+    
+    <label for="search" class="col sm-2 col-form-label" style="text-align: right; font-size: 18px;">
+        <br><br><br>
+        Search
+    </label>
+
+    <div class="col-sm-11">
+        <br><br><br><br>
+        <input type="text" [(ngModel)]="searchValue" class="form-control" id="search" />
+    </div>
+</div>
+
+<br>
+<h1 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+ margin-left: 40px;">>> <i><b>Below is the list of available products</b></i> </h1>
+
+ 
+<div class="center" style="background-color: rgb(250, 248, 248);">
+    <table mdbTable class="table " style="border: 3px; width: 70%; margin-left: auto; margin-right: auto;">
+        <thead class="black white-text">
+            <tr style="font-size: 17px;">
+                <th scope="col" style="width: 17%;">Name</th>
+                <th scope="col" style="width: 10%;">Category</th>
+                <th scope="col" >Brand</th>
+                <th scope="col" >Base Price (INR)</th>
+                <th scope="col" *ngIf="isVisible" style="width: 20%;">Product Details</th>
+                <th scope="col"  *ngIf="isVisible">Details of different sellers</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            <tr *ngFor="let p of product | searchfilter: searchValue" style="font-size: 15px;">
+                <td scope="col">{{p.productName}}</td>
+                <td scope="col">{{p.category}}</td>
+                <td scope="col">{{p.brand}}</td>
+                <td scope="col">{{p.price | currency:'INR'}}</td>
+                
+                <td scope="col">
+                    <div *ngIf="isVisible">{{p.description}}</div>
+                </td>   
+                <td scope="col">
+                    <div *ngIf="isVisible"> 
+                        <li *ngFor="let s of p.allSellersofProductList" style="margin-top: 10px;">
+                            {{s.email}} is selling at price = {{ s.price |currency:'INR'}}
+                        </li>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="button" (click)="hideList()"><b>Click for more info..!!</b> </button>
+</div>
